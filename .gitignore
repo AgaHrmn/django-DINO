@@ -1,0 +1,8 @@
+# virtual environment 
+dino_env
+
+# environment variables
+.env
+
+# scripts
+create_superuser.py

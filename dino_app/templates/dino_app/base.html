@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DINO</title>
+    <link rel="stylesheet" href="{% static 'dino_app/css/styles.css' %}">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'dino_app/images/DINO.png' %}" type="image/png">
+    
+    <!-- Apple Touch Icon (iOS) -->
+    <link rel="apple-touch-icon" href="{% static 'dino_app/images/DINO.png' %}">
+</head>
+<body>
+    <header>
+        <h1>Dynamic Integration for Navigation Outdoors</h1>
+        </header>
+    <main role="main" class="container">
+        <div class="pb-2 mb-2 border-bottom">
+            {% block page_header %}{% endblock %}
+        </div>
+        <div>
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    
+    <footer>
+        &copy; 2024 Agata Herman. All rights reserved.
+    </footer>
+</body>
+</html>

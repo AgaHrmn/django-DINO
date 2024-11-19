@@ -13,10 +13,35 @@ header {
     background: #333;
     color: #fff;
     text-align: center;
-    padding: 1rem 0;
+    padding: 1rem 0; /* Adds padding to make the header taller */
+    font-size: 1.5rem; /* Adjust font size */
+    position: relative; /* Keeps the header fixed at the top */
+    top: 0; /* Positions the header at the top */
+    width: 100%; /* Ensures the header takes the full width of the page */
+    z-index: 1000; /* Keeps it on top of other content */
 }
 
 header h1 {
+    margin: 0; /* Removes default margin from h1 */
+}
+
+/* Centering both the image and the heading */
+.page-header {
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    justify-content: center; /* Vertically center */
+    align-items: center; /* Horizontally center */
+    text-align: center;
+    margin: 0 auto;
+}
+
+.page-header img {
+    display: block; /* Makes the image a block element */
+    margin: 0 auto; /* Centers the image horizontally */
+}
+
+
+.page-header h1 {
     margin: 0;
     font-size: 2rem;
 }
@@ -73,7 +98,7 @@ footer {
     color: #fff;
     text-align: center;
     padding: 1rem 0;
-    position: fixed;
+    position: relative;
     bottom: 0;
     width: 100%;
     font-size: 0.9rem;

@@ -1,0 +1,27 @@
+{% extends "dino_app/base.html" %}
+
+{% block page_header %}
+    {% load static %}
+    <div class="page-header">
+        <img src="{% static 'dino_app/images/DINO.png' %}" alt="DINO" width="150">
+        <h1>Hello, I'm DINO!</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+<nav>
+    <a href="{% url 'dino_app:index' %}">Home</a>
+</nav>
+    <div class="container">
+        <ul>
+            <section id="about">
+                <h2>Created Routes</h2>
+                {% for route in routes %}
+                <li>{{ route }}</li>
+                {% empty %}
+                <li>No routes has been created yet.</li>
+                {% endfor %}
+            </section>
+        </ul>
+    </div>
+{% endblock %}

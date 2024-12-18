@@ -8,4 +8,7 @@ app_name = 'dino_app'
 urlpatterns = [
     # home page
     path('', views.index, name='index'),
+    # new_route
+    path('routes/', views.routes, name='routes'),
+
 ]

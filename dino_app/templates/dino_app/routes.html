@@ -17,7 +17,11 @@
             <section>
                 <h2>Created Routes</h2>
                 {% for route in routes %}
-                <li>{{ route }}</li>
+                <li>
+                        <h3>{{ route.title }}</h3>
+                        <p>{{ route.length }} km, {{ route.activity_type }}</p>
+                        <p>{{ route.date_added|date:'d M Y, H:i' }}</p>
+                </li>
                 {% empty %}
                 <li>No routes has been created yet.</li>
                 {% endfor %}

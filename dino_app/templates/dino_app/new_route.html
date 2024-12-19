@@ -15,7 +15,7 @@
     <div class="container">
         <ul>
             <section>
-                <h2>New route creation wizard</h2>
+                <h2>Let's plan another adventure!</h2>
                 <form action="{% url 'dino_app:new_route' %}" method="post">
                     {% csrf_token %}
                     {{ form.as_p }}

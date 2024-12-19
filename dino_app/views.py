@@ -9,7 +9,7 @@ def index(request):
 
 def routes(request):
     """View created routes"""
-    routes = Route.objects.order_by('date_added')
+    routes = Route.objects.order_by('-date_added') #newest to oldest
     context = {'routes' : routes}
     return render(request, 'dino_app/routes.html', context)
     

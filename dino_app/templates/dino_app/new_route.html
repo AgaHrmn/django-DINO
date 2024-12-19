@@ -15,13 +15,13 @@
     <div class="container">
         <ul>
             <section>
-                <h2>Created Routes</h2>
-                {% for route in routes %}
-                <li>{{ route }}</li>
-                {% empty %}
-                <li>No routes has been created yet.</li>
-                {% endfor %}
+                <h2>New route creation wizard</h2>
+                <form action="{% url 'dino_app:new_route' %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button name="submit">Create</button>
+
+                </form>
             </section>
-        </ul>
     </div>
-{% endblock %}
+{% endblock %} 

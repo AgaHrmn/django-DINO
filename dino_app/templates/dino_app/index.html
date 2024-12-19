@@ -10,7 +10,7 @@
 
 {% block content %}
     <nav>
-        <a href="#new_route">New route</a>
+        <a href="{% url 'dino_app:new_route' %}">New route</a>
         <a href="{% url 'dino_app:routes' %}">Created routes</a>
         <a href="#contact">Contact</a>
     </nav>

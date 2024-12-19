@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from .models import Route
+from .forms import RouteForm
 
 def index(request):
     """Home page for DINO"""
@@ -11,3 +13,18 @@ def routes(request):
     context = {'routes' : routes}
     return render(request, 'dino_app/routes.html', context)
     
+def new_route(request):
+    """Create new route"""
+    # return HttpResponse("OK") # validation
+    if request.method != 'POST':
+        # Create blank form
+        form = RouteForm()
+    else:
+        # Prcess POST data
+        form = RouteForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dino_app:routes')
+    # Display blank or invalid form
+    context = {'form': form}
+    return render(request, 'dino_app/new_route.html', context)

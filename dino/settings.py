@@ -52,9 +52,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    
+    'leaflet',
     # My apps
-    'dino_app'
+    'dino_app',
 ]
 
 MIDDLEWARE = [

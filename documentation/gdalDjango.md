@@ -33,9 +33,8 @@ reg ADD "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v P
 reg ADD "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment"/v GDAL_DATA /t REG_EXPAND_SZ /f /d "%GDAL_DATA%"
 reg ADD "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PROJ_LIB /t REG_EXPAND_SZ /f /d "%PROJ_LIB%"
 
-See [django doc](https://docs.djangoproject.com/en/4.0/ref/contrib/gis/install/#:~:text=set%20OSGEO4W_ROOT%3DC,f%20/d%20"%25PROJ_LIB%25") for all the commands above.
 ```
-
+See [django doc](https://docs.djangoproject.com/en/4.0/ref/contrib/gis/install/#:~:text=set%20OSGEO4W_ROOT%3DC,f%20/d%20"%25PROJ_LIB%25") for all the commands above.
 
 After you are done you can check the environment variables to confirm your changes by typing in the windows search box:
 

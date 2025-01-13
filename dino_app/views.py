@@ -28,3 +28,7 @@ def new_route(request):
     # Display blank or invalid form
     context = {'form': form}
     return render(request, 'dino_app/new_route.html', context)
+
+def dummy(request):
+    """Home page for DINO"""
+    return render(request, 'dino_app/dummy.html')

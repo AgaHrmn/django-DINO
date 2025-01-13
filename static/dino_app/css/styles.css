@@ -106,4 +106,6 @@ footer {
     margin-top: auto;
 }
 
-#map { height: 180px; }
+#map {
+    height: 400px;
+}

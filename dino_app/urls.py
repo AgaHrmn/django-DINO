@@ -12,4 +12,8 @@ urlpatterns = [
     path('routes/', views.routes, name='routes'),
     # new route
     path('new_route/', views.new_route, name='new_route'),
+
+
+    # development dummy page
+    path('dummy/', views.dummy, name='dummy'),
 ]

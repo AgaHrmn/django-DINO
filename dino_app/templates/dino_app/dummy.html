@@ -11,21 +11,6 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
     <script src="{% static 'dino_app/leaflet_routing_machine/leaflet-routing-machine.js' %}"></script>
 
-    <script>
-        var map = L.map('map').setView([51.1079, 17.0385], 13);
+    <script src="{% static '/dino_app/js/map_functions.js' %}"></script>
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        L.Routing.control({
-            waypoints: [
-                L.latLng([51.1079, 17.0385]),
-                L.latLng([51.7500, 19.4667])
-            ],
-            routeWhileDragging: true
-        }).addTo(map);
-
-    </script>
-
-{% endblock %} 
+{% endblock %}

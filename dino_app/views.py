@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Route
 from .forms import RouteForm
+import json
 
 def index(request):
     """Home page for DINO"""
@@ -23,6 +24,13 @@ def new_route(request):
         # Prcess POST data
         form = RouteForm(data=request.POST)
         if form.is_valid():
+            # Extract the GeoJSON data (waypoints)
+            geojson_data = form.cleaned_data.get('waypoints_list')
+            if geojson_data:
+                # Use json.loads() to parse the GeoJSON string into a Python dict
+                waypoints = json.loads(geojson_data)
+                # Perform any additional processing you need on the waypoints here
+
             form.save()
             return redirect('dino_app:routes')
     # Display blank or invalid form

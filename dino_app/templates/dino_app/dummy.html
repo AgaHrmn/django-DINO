@@ -21,13 +21,20 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Define the routing control globally
-        L.Routing.control({
+        function createButton(label, container) {
+            var btn = L.DomUtil.create('button', '', container);
+            btn.setAttribute('type', 'button');
+            btn.innerHTML = label;
+            return btn;
+        }
+        
+        // Declare control variable globally
+        var control = L.Routing.control({
             waypoints: [
                 L.latLng([51.1079, 17.0385]),
                 L.latLng([51.7500, 19.4667])
             ],
-            routeWhileDragging: true,
+            // routeWhileDragging: true,
             
         })
         .on('routeselected', function(e) {
@@ -35,13 +42,6 @@
         alert('Showing route between waypoints:\n' + JSON.stringify(route.inputWaypoints, null, 2));
         })
         .addTo(map);
-
-        function createButton(label, container) {
-            var btn = L.DomUtil.create('button', '', container);
-            btn.setAttribute('type', 'button');
-            btn.innerHTML = label;
-            return btn;
-        }
 
         map.on('click', function(e) {
             var container = L.DomUtil.create('div'),

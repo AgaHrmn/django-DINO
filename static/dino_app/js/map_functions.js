@@ -4,8 +4,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Define the routing control globally
-L.Routing.control({
+// Declare control variable globally
+var control = L.Routing.control({
     waypoints: [
         L.latLng([51.1079, 17.0385]),
         L.latLng([51.7500, 19.4667])

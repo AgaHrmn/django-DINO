@@ -2,7 +2,6 @@
 
 {% block page_header %}
     {% load static %}
-    <P>LEAFLET ROUTING MACHINE</P>
 {% endblock %}
 
 {% block content %}
@@ -11,8 +10,6 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
     <script src="{% static 'dino_app/leaflet_routing_machine/leaflet-routing-machine.js' %}"></script>
 
-    <!-- <script src="{% static '/dino_app/js/map_functions.js' %}"></script> -->
-
     <script>
 
         var map = L.map('map').setView([51.1079, 17.0385], 13);
@@ -20,6 +17,7 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
+        
 
         function createButton(label, container) {
             var btn = L.DomUtil.create('button', '', container);
@@ -30,16 +28,13 @@
         
         // Declare control variable globally
         var control = L.Routing.control({
-            waypoints: [
-                L.latLng([51.1079, 17.0385]),
-                L.latLng([51.7500, 19.4667])
-            ],
-            // routeWhileDragging: true,
-            
+            waypoints: [],
+            routeWhileDragging: true,
         })
         .on('routeselected', function(e) {
         var route = e.route;
-        alert('Showing route between waypoints:\n' + JSON.stringify(route.inputWaypoints, null, 2));
+        console.log(route.inputWaypoints)
+        // alert('Showing route between waypoints:\n' + JSON.stringify(route.inputWaypoints, null, 2));
         })
         .addTo(map);
 
@@ -47,6 +42,10 @@
             var container = L.DomUtil.create('div'),
                 startBtn = createButton('Start from this location', container),
                 destBtn = createButton('Go to this location', container);
+
+                addWaypointBtn = createButton('Add a waypoint', container);
+                clearRouteBtn = createButton('Clear', container);
+                generateRouteBtn = createButton('Generate routre', container);
 
             L.popup()
                 .setContent(container)
@@ -63,12 +62,18 @@
                 control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);  // Update the destination waypoint
                 map.closePopup();
             });
+
+            // my buttons
+            L.DomEvent.on(addWaypointBtn, 'click', function() {
+                control.spliceWaypoints(control.getWaypoints().length - 1, 0, e.latlng);  // Add new waypoint to map
+                map.closePopup();
+            });
+            L.DomEvent.on(clearRouteBtn, 'click', function() {
+                control.setWaypoints([]);  // Clear the route and waypoints
+                map.closePopup();
+            });
         });
 
     </script>
-
-
-
-    <button id="saveRouteBtn" class="btn btn-primary" style="margin-top: 10px;">Save Route</button>
 
 {% endblock %}

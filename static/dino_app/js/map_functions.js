@@ -4,20 +4,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Declare control variable globally
-var control = L.Routing.control({
-    waypoints: [
-        L.latLng([51.1079, 17.0385]),
-        L.latLng([51.7500, 19.4667])
-    ],
-    routeWhileDragging: true,
-    
-})
-.on('routeselected', function(e) {
-var route = e.route;
-alert('Showing route between waypoints:\n' + JSON.stringify(route.inputWaypoints, null, 2));
-})
-.addTo(map);
 
 function createButton(label, container) {
     var btn = L.DomUtil.create('button', '', container);
@@ -26,10 +12,26 @@ function createButton(label, container) {
     return btn;
 }
 
+// Declare control variable globally
+var control = L.Routing.control({
+    waypoints: [],
+    routeWhileDragging: true,
+})
+.on('routeselected', function(e) {
+var route = e.route;
+console.log(route.inputWaypoints)
+// alert('Showing route between waypoints:\n' + JSON.stringify(route.inputWaypoints, null, 2));
+})
+.addTo(map);
+
 map.on('click', function(e) {
     var container = L.DomUtil.create('div'),
         startBtn = createButton('Start from this location', container),
         destBtn = createButton('Go to this location', container);
+
+        addWaypointBtn = createButton('Add a waypoint', container);
+        clearRouteBtn = createButton('Clear', container);
+        generateRouteBtn = createButton('Generate routre', container);
 
     L.popup()
         .setContent(container)
@@ -44,6 +46,16 @@ map.on('click', function(e) {
 
     L.DomEvent.on(destBtn, 'click', function() {
         control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);  // Update the destination waypoint
+        map.closePopup();
+    });
+
+    // my buttons
+    L.DomEvent.on(addWaypointBtn, 'click', function() {
+        control.spliceWaypoints(control.getWaypoints().length - 1, 0, e.latlng);  // Add new waypoint to map
+        map.closePopup();
+    });
+    L.DomEvent.on(clearRouteBtn, 'click', function() {
+        control.setWaypoints([]);  // Clear the route and waypoints
         map.closePopup();
     });
 });

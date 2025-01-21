@@ -9,6 +9,14 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
     <script src="{% static 'dino_app/leaflet_routing_machine/leaflet-routing-machine.js' %}"></script>
+<!-- FORM TO HANDLE HIDDEN FIELD -->
+    <form action="{% url 'dino_app:new_route' %}" id="route-form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+            <!-- Hidden input for waypoints -->
+        <input type="hidden" id="id_waypoints_list" name="waypoints_list">
+        <button type="submit">Save Route</button>
+    </form>
 
     <script>
 
@@ -72,6 +80,37 @@
                 control.setWaypoints([]);  // Clear the route and waypoints
                 map.closePopup();
             });
+                    // Event listener for the "Generate route" button
+            L.DomEvent.on(generateRouteBtn, 'click', function() {
+                saveWaypointsToHiddenField();
+                alert('Route saved! Submit the form to save the waypoints.');
+                map.closePopup();
+            });
+        });
+
+        // save waypoints to JSON in hidden form field
+        function saveWaypointsToHiddenField() {
+            var waypoints = control.getWaypoints().map(function(wp) {
+                if (wp.latLng) {
+                    return { lat: wp.latLng.lat, lng: wp.latLng.lng };
+                }
+            }).filter(Boolean); // Remove any undefined entries
+
+            console.log(document.getElementById('id_waypoints_list').value);
+            // Convert to JSON and store in the hidden form field
+            document.getElementById('id_waypoints_list').value = JSON.stringify(waypoints);
+        }
+
+        // // Event listener for the "Generate route" button
+        // L.DomEvent.on(generateRouteBtn, 'click', function() {
+        //     saveWaypointsToHiddenField();
+        //     alert('Route saved! Submit the form to save the waypoints.');
+        //     map.closePopup();
+        // });
+
+        // Add event listener before form submission to ensure waypoints are saved
+        document.getElementById('route-form').addEventListener('submit', function() {
+            saveWaypointsToHiddenField();
         });
 
     </script>

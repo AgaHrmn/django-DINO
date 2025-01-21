@@ -13,21 +13,19 @@
     <a href="{% url 'dino_app:index' %}">Home</a>
     <a href="{% url 'dino_app:dummy' %}">Dummy</a>
 </nav>
-    <div class="container">
-        <ul>
-            <section>
-                <h2>Created Routes</h2>
-                {% for route in routes %}
-                <li>
-                        <h3>{{ route.title }}</h3>
-                        <p>{{ route.length }} km, {{ route.activity_type }}</p>
-                        <p>{{ route.waypoints_list }}</p>
-                        <p>{{ route.date_added|date:'d M Y, H:i' }}</p>
-                </li>
-                {% empty %}
-                <li>No routes has been created yet.</li>
-                {% endfor %}
-            </section>
-        </ul>
-    </div>
+<h2>Created Routes</h2>
+    <ul>
+        <section>
+            {% for route in routes %}
+            <li>
+                    <h3>{{ route.title }}</h3>
+                    <p>{{ route.length }} km, {{ route.activity_type }}</p>
+                    <p>{{ route.waypoints_list }}</p>
+                    <p>{{ route.date_added|date:'d M Y, H:i' }}</p>
+            </li>
+            {% empty %}
+            <li>No routes has been created yet.</li>
+            {% endfor %}
+        </section>
+    </ul>
 {% endblock %}

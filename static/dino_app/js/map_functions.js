@@ -1,5 +1,4 @@
 var map = L.map('map').setView([51.1079, 17.0385], 13);
-
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
@@ -20,7 +19,6 @@ var control = L.Routing.control({
 .on('routeselected', function(e) {
 var route = e.route;
 console.log(route.inputWaypoints)
-// alert('Showing route between waypoints:\n' + JSON.stringify(route.inputWaypoints, null, 2));
 })
 .addTo(map);
 
@@ -31,7 +29,6 @@ map.on('click', function(e) {
 
         addWaypointBtn = createButton('Add a waypoint', container);
         clearRouteBtn = createButton('Clear', container);
-        generateRouteBtn = createButton('Generate routre', container);
 
     L.popup()
         .setContent(container)
@@ -58,4 +55,22 @@ map.on('click', function(e) {
         control.setWaypoints([]);  // Clear the route and waypoints
         map.closePopup();
     });
+});
+
+// save waypoints to JSON in hidden form field
+function saveWaypointsToHiddenField() {
+    var waypoints = control.getWaypoints().map(function(wp) {
+        if (wp.latLng) {
+            return { lat: wp.latLng.lat, lng: wp.latLng.lng };
+        }
+    }).filter(Boolean); // Remove any undefined entries
+
+    console.log(document.getElementById('id_waypoints_list').value);
+    // Convert to JSON and store in the hidden form field
+    document.getElementById('id_waypoints_list').value = JSON.stringify(waypoints);
+}
+
+// Add event listener before form submission to ensure waypoints are saved
+document.getElementById('route-form').addEventListener('submit', function() {
+    saveWaypointsToHiddenField();
 });

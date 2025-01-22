@@ -24,15 +24,10 @@ def new_route(request):
         # Prcess POST data
         form = RouteForm(data=request.POST)
         if form.is_valid():
-            # Extract the GeoJSON data (waypoints)
-            geojson_data = form.cleaned_data.get('waypoints_list')
-            if geojson_data:
-                # Use json.loads() to parse the GeoJSON string into a Python dict
-                waypoints = json.loads(geojson_data)
-                # Perform any additional processing you need on the waypoints here
-
             form.save()
             return redirect('dino_app:routes')
+        else: 
+            print(form.errors)
     # Display blank or invalid form
     context = {'form': form}
     return render(request, 'dino_app/new_route.html', context)

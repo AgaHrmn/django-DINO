@@ -19,8 +19,10 @@
             {% for route in routes %}
             <li>
                     <h3>{{ route.title }}</h3>
-                    <p>{{ route.length }} km, {{ route.activity_type }}</p>
-                    <p>{{ route.waypoints_list }}</p>
+                    <p> {{ route.length }} km, {{ route.activity_type }}</p>
+                    {% for waypoint in route.waypoints_list %}
+                        <p>{{ waypoint }}</p>
+                    {% endfor %}
                     <p>{{ route.date_added|date:'d M Y, H:i' }}</p>
             </li>
             {% empty %}

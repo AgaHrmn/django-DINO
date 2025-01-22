@@ -31,7 +31,6 @@ var control = L.Routing.control({
     .map(function(waypoint) {
         return waypoint.latLng; // Extract the latLng property
     });
-
     console.log(waypoints);
     document.getElementById('id_waypoints_list').value = JSON.stringify(waypoints);
 })

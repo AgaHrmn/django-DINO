@@ -16,20 +16,24 @@ var control = L.Routing.control({
     waypoints: [],
     routeWhileDragging: false,
 })
-.on('routeselected', function(e) {
-    var route = e.route;
-    console.log(route.inputWaypoints)
-})
 .on('routesfound', function(e) {
     // extract the total distance in meters
     var length = e.routes[0].summary.totalDistance; 
-
     // convert the distance to kilometers
     var formattedLength = (length / 1000).toFixed(2)
-
     // set the formatted distance as the value of the input field
     document.getElementById('id_length').value = formattedLength;
+})
+.on('waypointschanged', function(e) {
+    // get waypoints 
+    var waypoints = control.getWaypoints(e)
+    // extract only latLng values from waypoint (there are also name, options, and _initHooksCalled)
+    .map(function(waypoint) {
+        return waypoint.latLng; // Extract the latLng property
+    });
 
+    console.log(waypoints);
+    document.getElementById('id_waypoints_list').value = JSON.stringify(waypoints);
 })
 .addTo(map);
 
@@ -50,45 +54,22 @@ map.on('click', function(e) {
     L.DomEvent.on(startBtn, 'click', function() {
         control.spliceWaypoints(0, 1, e.latlng);  // Update the start waypoint
         map.closePopup();
-        updateWaypoints();
     });
 
     L.DomEvent.on(destBtn, 'click', function() {
         control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);  // Update the destination waypoint
         map.closePopup();
-        updateWaypoints();
     });
 
     // my buttons
     L.DomEvent.on(addWaypointBtn, 'click', function() {
         control.spliceWaypoints(control.getWaypoints().length - 1, 0, e.latlng);  // Add new waypoint to map
         map.closePopup();
-        updateWaypoints();
     });
     L.DomEvent.on(clearRouteBtn, 'click', function() {
         control.setWaypoints([]);  // Clear the route and waypoints
         map.closePopup();
-        updateWaypoints();
         document.getElementById('id_waypoints_list').value = JSON.stringify([]);
         document.getElementById('id_length').value = 0
     });
-});
-
-// save waypoints to JSON
-function updateWaypoints() {
-    var waypoints = control.getWaypoints().map(function(wp) {
-        if (wp.latLng) {
-            return { lat: wp.latLng.lat, lng: wp.latLng.lng };
-        }
-    }).filter(Boolean); // Remove any undefined entries
-
-    // set the updated waypoints as the value of the input field
-    console.log(JSON.stringify(waypoints));
-    console.log(typeof(JSON.stringify(waypoints)));
-    document.getElementById('id_waypoints_list').value = JSON.stringify(waypoints);
-}
-
-// add event listener before form submission to ensure that length and waypoints are saved
-document.getElementById('route-form').addEventListener('submit', function() {
-    updateWaypoints();
 });

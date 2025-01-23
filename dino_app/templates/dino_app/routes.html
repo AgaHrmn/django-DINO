@@ -20,10 +20,40 @@
             <li>
                     <h3>{{ route.title }}</h3>
                     <p> {{ route.length }} km, {{ route.activity_type }}</p>
-                    {% for waypoint in route.waypoints_list %}
-                        <p>{{ waypoint }}</p>
-                    {% endfor %}
                     <p>{{ route.date_added|date:'d M Y, H:i' }}</p>
+                    <input type="hidden" id="waypoints_{{ route.id }}" value="{{ route.waypoints_list }}">
+                    <input type="hidden" id="id" value="{{ route.id }}">
+
+                    <div id="map_{{ route.id }}" class="map-container"></div>
+
+                    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
+                    <script src="{% static 'dino_app/leaflet_routing_machine/leaflet-routing-machine.js' %}"></script>
+
+                    <script>
+                        var waypoints_data = document.getElementById('waypoints_{{ route.id }}').value;
+                        console.log("waypoints_data " + waypoints_data)
+                        var waypoints_json = JSON.parse(waypoints_data)
+                        console.log("waypoints_json " + waypoints_json)
+
+                        var map = L.map('map_{{ route.id }}');
+
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(map);
+
+                        L.Routing.control({
+                        waypoints: waypoints_json.map(function(waypoint) {
+                            return L.latLng(waypoint.lat, waypoint.lng)
+                        }),
+                        routeWhileDragging: false,
+                        show: false,
+                        lineOptions : {
+                            addWaypoints: false // don't let user change routes here
+                        }
+                        }).addTo(map);
+
+
+                    </script>
             </li>
             {% empty %}
             <li>No routes has been created yet.</li>

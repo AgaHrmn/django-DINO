@@ -11,6 +11,11 @@ def index(request):
 def routes(request):
     """View created routes"""
     routes = Route.objects.order_by('-date_added') #newest to oldest
+
+    for route in routes:
+        # convert list of dictionaries it to a JSON string
+        route.waypoints_list = json.dumps(route.waypoints_list)
+    
     context = {'routes' : routes}
     return render(request, 'dino_app/routes.html', context)
     

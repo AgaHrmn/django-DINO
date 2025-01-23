@@ -136,3 +136,7 @@ footer {
 #map {
     height: 400px;
 }
+
+.map-container {
+    height: 400px;
+}

@@ -19,7 +19,7 @@
             {% for route in routes %}
             <li>
                     <h3>{{ route.title }}</h3>
-                    <p>{{ route.length }} km, {{ route.activity_type }}</p>
+                    <p> {{ route.length }} km, {{ route.activity_type }}</p>
                     {% for waypoint in route.waypoints_list %}
                         <p>{{ waypoint }}</p>
                     {% endfor %}

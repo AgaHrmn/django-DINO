@@ -20,9 +20,11 @@ def new_route(request):
     if request.method != 'POST':
         # Create blank form
         form = RouteForm()
+        print(request.POST)
     else:
         # Prcess POST data
         form = RouteForm(data=request.POST)
+        print(request.POST)
         if form.is_valid():
             form.save()
             return redirect('dino_app:routes')

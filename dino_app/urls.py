@@ -10,6 +10,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     # all routes
     path('routes/', views.routes, name='routes'),
+    # detail page for single route
+    path('routes/<int:route_id>/', views.route, name='route'),
     # new route
     path('new_route/', views.new_route, name='new_route'),
 

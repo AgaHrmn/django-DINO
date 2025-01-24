@@ -7,7 +7,7 @@ class Route(models.Model):
     activity_type = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now_add=True)
     waypoints_list = models.JSONField()
-    # id = models.IntegerField(primary_key=True)
+    icon = models.CharField(default="")
 
     def __str__(self):
         '''Return string representation of the model'''

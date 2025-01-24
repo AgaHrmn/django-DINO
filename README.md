@@ -63,7 +63,6 @@ The **Route Planner Application** is a cloud-based tool designed to help users g
 
 ## Accessibility and Localization
 - Designed for users of all ages with an emphasis on simplicity and readability.
-- Available in **Polish** for localized instructions and user guidance.
 
 ---
 

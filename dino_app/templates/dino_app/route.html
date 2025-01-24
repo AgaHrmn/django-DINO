@@ -1,0 +1,53 @@
+{% extends "dino_app/base.html" %}
+
+{% block page_header %}
+    {% load static %}
+    <div class="page-header">
+        <img src="{% static 'dino_app/images/DINO.png' %}" alt="DINO" width="150">
+        <h1>Hello, I'm DINO!</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+<nav>
+    <a href="{% url 'dino_app:index' %}">Home</a>
+    <a href="{% url 'dino_app:routes' %}">All routes</a>
+    <a href="{% url 'dino_app:new_route' %}">New route</a>
+</nav>
+<h2>{{ route.title }}</h2>
+<p> {{ route.length }} km, {{ route.activity_type }}</p>
+<p>{{ route.date_added|date:'d M Y, H:i' }}</p>
+<input type="hidden" id="waypoints" value="{{ route.waypoints_list }}">
+
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
+<script src="{% static 'dino_app/leaflet_routing_machine/leaflet-routing-machine.js' %}"></script>
+
+<script>
+    var waypoints_data = document.getElementById('waypoints').value;
+    console.log("waypoints_data " + waypoints_data)
+    var waypoints_json = JSON.parse(waypoints_data)
+    console.log("waypoints_json " + waypoints_json)
+
+    var map = L.map('map');
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.Routing.control({
+    waypoints: waypoints_json.map(function(waypoint) {
+        return L.latLng(waypoint.lat, waypoint.lng)
+    }),
+    routeWhileDragging: false,
+    draggableWaypoints: false,
+    show: false,
+    lineOptions : {
+        addWaypoints: false // don't let user change routes here
+    },
+    
+    }).addTo(map);
+
+
+</script>
+{% endblock %}

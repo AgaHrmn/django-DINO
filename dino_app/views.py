@@ -10,14 +10,31 @@ def index(request):
 
 def routes(request):
     """View created routes"""
-    routes = Route.objects.order_by('-date_added') #newest to oldest
 
-    for route in routes:
-        # convert list of dictionaries it to a JSON string
-        route.waypoints_list = json.dumps(route.waypoints_list)
-    
+    ACTIVITIES_ICONS= {
+        "Run": "🏃",
+        "Walk" : "🚶",
+        "Hike" : "🥾",
+        "Road bike" : "🚴‍♂️",
+        "Mountain bike" : "🚵‍♂️",
+    }
+
+    routes = Route.objects.order_by('-date_added') #newest to oldest
+    for route in routes: 
+        for k,v in ACTIVITIES_ICONS.items():
+            if route.activity_type == k:
+                route.icon = v
+                route.save()
     context = {'routes' : routes}
     return render(request, 'dino_app/routes.html', context)
+
+def route(request, route_id):
+    """Show a single route and its details"""
+    route = Route.objects.get(id=route_id)
+    # convert list of dictionaries it to a JSON string
+    route.waypoints_list = json.dumps(route.waypoints_list)
+    context = {'route' : route}
+    return render(request, 'dino_app/route.html', context)
     
 def new_route(request):
     """Create new route"""

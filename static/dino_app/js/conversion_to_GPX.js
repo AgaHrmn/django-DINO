@@ -27,30 +27,14 @@ lineOptions : {
 })
 .addTo(map);
 
-// convert waypoints to gpx file format 
-
-// function parse_waypoints_to_xml(parsed_waypoints) {
-//     return parsed_waypoints.map(function(waypoint) {
-//         return `
-//         <wpt lat="${waypoint.lat}" lon="${waypoint.lng}">
-//             <ele></ele>
-//             <time></time>
-//             <name></name>
-//             <desc></desc>
-//             <sym></sym>
-//             <type></type>
-//         </wpt>`;
-//     }).join('')
-// }
-
 function parse_trackpoints_to_xml(parsed_trackpoints) {
     index = 0
     return parsed_trackpoints.map(function(track_point) {
         return `
-                <trkpt lat="${track_point.lat}" lon="${track_point.lng}">
-                    <ele></ele>
-                    <time></time>
-                </trkpt>`
+            <trkpt lat="${track_point.lat}" lon="${track_point.lng}">
+                <ele></ele>
+                <time></time>
+            </trkpt>`
     }).join('')
 }
 

@@ -109,6 +109,12 @@ nav a:hover {
     font-size: 1.5rem;
 }
 
+hr {
+    color: #007BFF;
+}
+
+
+
 /* Links */
 .container a {
     color: #007BFF;
@@ -140,3 +146,71 @@ footer {
 .map-container {
     height: 400px;
 }
+
+/* Form Styles */
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+form select:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+form input[type="text"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+form input[type="text"]:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Button Styles */
+button,
+form input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover,
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+button:focus,
+form input[type="submit"]:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+

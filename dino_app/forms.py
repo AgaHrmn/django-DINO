@@ -15,4 +15,9 @@ class RouteForm(forms.ModelForm):
     class Meta: #  Meta class tells django which model to base the form on and which fields to include in the form.
         model = Route
         fields = ['title', 'length', 'activity_type', 'waypoints_list', 'trackpoints_list'] # same as in models!
-        labels = {'title' : 'Title', 'length' : 'Length', 'activity_type' : 'Activity Type', 'waypoints_list' : 'Waypoints', 'trackpoints_list' : 'Trackpoints'} # don't generate labels for text fields
+        labels = {'title' : 'Title', 'length' : 'Length', 'activity_type' : 'Activity Type'} 
+        widgets = {
+            'waypoints_list': forms.TextInput(attrs={'type': 'hidden'}),
+            'trackpoints_list': forms.TextInput(attrs={'type': 'hidden'}),
+            'length': forms.TextInput(attrs={'readonly': 'readonly'})
+        }

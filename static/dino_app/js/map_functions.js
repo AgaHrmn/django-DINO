@@ -35,6 +35,10 @@ var control = L.Routing.control({
     console.log(waypoints);
     document.getElementById('id_waypoints_list').value = JSON.stringify(waypoints);
 })
+.on('routeselected', function(routes) {
+    console.log(routes.route.coordinates)
+    document.getElementById('id_trackpoints_list').value = JSON.stringify(routes.route.coordinates);
+    })
 .addTo(map);
 
 map.on('click', function(e) {

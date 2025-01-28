@@ -7,6 +7,7 @@ class Route(models.Model):
     activity_type = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now_add=True)
     waypoints_list = models.JSONField()
+    trackpoints_list = models.JSONField()
     icon = models.CharField(default="")
 
     def __str__(self):

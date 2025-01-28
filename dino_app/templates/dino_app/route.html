@@ -14,10 +14,12 @@
     <a href="{% url 'dino_app:routes' %}">All routes</a>
     <a href="{% url 'dino_app:new_route' %}">New route</a>
 </nav>
+<!-- h2 elements (and most other elements) don't have a "value". Only elements that behave as form controls have a value property (e.g. the input element) -->
 <h2>{{ route.title }}</h2>
 <p> {{ route.length }} km, {{ route.activity_type }}</p>
 <p>{{ route.date_added|date:'d M Y, H:i' }}</p>
 <input type="hidden" id="waypoints" value="{{ route.waypoints_list }}">
+<input type="hidden" id="title" value="{{ route.title }}">
 
 <div id="map"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
@@ -25,9 +27,8 @@
 
 <script>
     var waypoints_data = document.getElementById('waypoints').value;
-    console.log("waypoints_data " + waypoints_data)
+    // console.log("waypoints_data " + waypoints_data)
     var waypoints_json = JSON.parse(waypoints_data)
-    console.log("waypoints_json " + waypoints_json)
 
     var map = L.map('map');
 
@@ -37,6 +38,7 @@
 
     L.Routing.control({
     waypoints: waypoints_json.map(function(waypoint) {
+        // console.log(L.latLng(waypoint.lat, waypoint.lng))
         return L.latLng(waypoint.lat, waypoint.lng)
     }),
     routeWhileDragging: false,
@@ -48,6 +50,39 @@
     
     }).addTo(map);
 
+    // convert waypoints to gpx file format 
+
+    // <?xml version="1.0" encoding="UTF-8"?>
+    // <gpx version="1.0">
+    //     <name>Example gpx</name>
+    //     <wpt lat="46.57638889" lon="8.89263889">
+    //         <ele>2372</ele>
+    //         <name>LAGORETICO</name>
+    //     </wpt>
+    //     <trk><name>Example gpx</name><number>1</number><trkseg>
+    //         <trkpt lat="" lon=""></trkpt>
+    //     </trkseg></trk>
+    // </gpx>
+
+    function toGpx(parsed_json) {
+        let lat_lng_waypoints = parsed_json.map(function(waypoint) {
+            // console.log('<wpt lat=' +waypoint.lat + ' lon='+ waypoint.lng +'>\n')
+            return ('<wpt lat=' +'"'+ waypoint.lat +'"'+ ' lon='+'"'+ waypoint.lng +'"'+'></wpt>\n')}).join('\t')
+        
+        let title = document.getElementById('title').value;
+
+        let gpx_file_content = 
+`<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.0">
+    <name>${title}</name>\n
+    ${lat_lng_waypoints}
+</gpx>
+`
+        
+        console.log(gpx_file_content)
+    }
+
+    toGpx(waypoints_json);
 
 </script>
 {% endblock %}

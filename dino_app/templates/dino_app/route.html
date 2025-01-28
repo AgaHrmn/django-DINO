@@ -18,79 +18,19 @@
 <h2>{{ route.title }}</h2>
 <p> {{ route.length }} km, {{ route.activity_type }}</p>
 <p>{{ route.date_added|date:'d M Y, H:i' }}</p>
+
+<hr>
+
 <input type="hidden" id="waypoints" value="{{ route.waypoints_list }}">
 <input type="hidden" id="trackpoints" value="{{ route.trackpoints_list }}">
 <input type="hidden" id="title" value="{{ route.title }}">
+<input type="hidden" id="route_id" value="{{ route.id }}">
 
 <div id="map"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
 <script src="{% static 'dino_app/leaflet_routing_machine/leaflet-routing-machine.js' %}"></script>
 
-<script>
-    var waypoints_data = document.getElementById('waypoints').value;
-    var waypoints_json = JSON.parse(waypoints_data);
-    
-    // replace single quotes witch double for JSONparse to work
-    var trackpoints_data = document.getElementById('trackpoints').value.replace(/'/g, '"');
-    var trackpoints_json = JSON.parse(trackpoints_data);
-    
-    var map = L.map('map');
+<button id="save-gpx-button">Save GPX</button>
+<script src="{% static '/dino_app/js/conversion_to_GPX.js' %}"></script>
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    L.Routing.control({
-    waypoints: waypoints_json.map(function(waypoint) {
-        return L.latLng(waypoint.lat, waypoint.lng)
-    }),
-    routeWhileDragging: false,
-    draggableWaypoints: false,
-    show: false,
-    lineOptions : {
-        addWaypoints: false // don't let user change routes here
-    },
-
-    })
-    .addTo(map);
-
-    // convert waypoints to gpx file format 
-
-    function parse_waypoints_to_xml(parsed_waypoints) {
-        return parsed_waypoints.map(function(waypoint) {
-            return (`<wpt lat="${waypoint.lat}" lon="${waypoint.lng}"></wpt>\n`)})
-            .join('\t')
-    }
-
-    function parse_trackpoints_to_xml(parsed_trackpoints) {
-        index = 0
-        return parsed_trackpoints.map(function(track_point) {
-            return `
-    <trk>
-        <number>${index += 1}</number>
-        <trkseg>
-        <trkpt lat="${track_point.lat}" lon="${track_point.lng}"></trkpt>
-        </trkseg>
-    </trk>`;
-        }).join('')
-    }
-    // console.log(parse_trackpoints_to_xml(trackpoints_json))
-
-    function to_GPX(parsed_waypoints, parsed_trackpoints) {
-        let title = document.getElementById('title').value;
-
-        let gpx_file_content = 
-`<?xml version="1.0" encoding="UTF-8"?>
-<gpx version="1.0">
-    <name>${title}</name>\n
-    ${parse_waypoints_to_xml(parsed_waypoints)}
-    ${parse_trackpoints_to_xml(parsed_trackpoints)}
-</gpx>
-`;
-        gpx_file_content.replace(/^\s*\n/gm, "");
-        console.log(gpx_file_content)
-    }
-to_GPX(waypoints_json, trackpoints_json)
-
-</script>
 {% endblock %}

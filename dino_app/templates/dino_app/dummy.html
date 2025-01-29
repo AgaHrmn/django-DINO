@@ -6,5 +6,51 @@
 
 {% block content %}
 
+    <h2>{{ route.title }}</h2>
+
+    <input type="hidden" id="trackpoints" value="{{ route.trackpoints_list }}">
+    <hr>
+    
+    <script>
+    async function loadDEMinfo() {
+        const url = "{% static 'dino_app/geotiff_data/GDEM-10km-BW.tif' %}";
+        // using local ArrayBuffer
+        const response = await fetch(url)
+        const arrayBuffer = await response.arrayBuffer();
+        const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer);
+        const image = await tiff.getImage();
+        const raster = await image.readRasters(); // Extract raster values
+    
+        const bbox = image.getBoundingBox(); // Get the DEM's bounding box
+        const width = image.getWidth();
+        const height = image.getHeight();
+    
+    
+        // Example lat/lng to check
+        const lat = 51.1079; // Wroclaw
+        const lng = 17.0385;
+
+    
+        const elevation = getElevation(lat, lng, bbox, raster, width, height);
+        console.log(`Elevation at (${lat}, ${lng}): ${elevation} meters`);
+    }
+    
+    function getElevation(lat, lng, bbox, raster, width, height) {
+        const [minX, minY, maxX, maxY] = bbox;
+    
+        // Convert lat/lng to pixel coordinates
+        const x = Math.round(((lng - minX) / (maxX - minX)) * width);
+        const y = Math.round(((maxY - lat) / (maxY - minY)) * height);
+    
+        if (x < 0 || x >= width || y < 0 || y >= height) {
+            return "Out of DEM bounds";
+        }
+    
+        return raster[0][y * width + x]; // Extract elevation value
+    }
+
+    loadDEMinfo()
+    </script>
+    
 
 {% endblock %}

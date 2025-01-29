@@ -31,7 +31,7 @@ def routes(request):
 def route(request, route_id):
     """Show a single route and its details"""
     route = Route.objects.get(id=route_id)
-    # convert list of dictionaries it to a JSON string
+    # convert list of dictionaries to a JSON string
     route.waypoints_list = json.dumps(route.waypoints_list)
     context = {'route' : route}
     return render(request, 'dino_app/route.html', context)
@@ -58,4 +58,7 @@ def new_route(request):
 
 def dummy(request):
     """Home page for DINO"""
-    return render(request, 'dino_app/dummy.html')
+    route = Route.objects.get(id=25)
+    route.waypoints_list = json.dumps(route.waypoints_list)
+    context = {'route' : route}
+    return render(request, 'dino_app/dummy.html',context)

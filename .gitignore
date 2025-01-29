@@ -6,3 +6,9 @@ dino_env
 
 # scripts
 create_superuser.py
+
+# leaflet
+static\leaflet
+
+# secrets
+static\secrets

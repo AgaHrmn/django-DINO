@@ -3,7 +3,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-
 function createButton(label, container) {
     var btn = L.DomUtil.create('button', '', container);
     btn.setAttribute('type', 'button');
@@ -31,12 +30,10 @@ var control = L.Routing.control({
     .map(function(waypoint) {
         return waypoint.latLng; // Extract the latLng property
     });
-
-    console.log(waypoints);
     document.getElementById('id_waypoints_list').value = JSON.stringify(waypoints);
 })
 .on('routeselected', function(routes) {
-    console.log(routes.route.coordinates)
+    // console.log(routes.route.coordinates)
     document.getElementById('id_trackpoints_list').value = JSON.stringify(routes.route.coordinates);
     })
 .addTo(map);

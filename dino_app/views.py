@@ -37,8 +37,10 @@ def routes(request):
 def route(request, route_id):
     """Show a single route and its details"""
     route = Route.objects.get(id=route_id)
-    # convert list of dictionaries to a JSON string
-    route.waypoints_list = json.dumps(route.waypoints_list)
+    print(type(route.waypoints_list))
+    print(f"Trackpoints loaded: {route.trackpoints_list[:5]}")
+    print(type(route.trackpoints_list))
+
     context = {'route' : route}
     return render(request, 'dino_app/route.html', context)
     
@@ -68,3 +70,38 @@ def dummy(request):
     route.waypoints_list = json.dumps(route.waypoints_list)
     context = {'route' : route}
     return render(request, 'dino_app/dummy.html',context)
+
+
+def save_gpx(request, route_id):
+    """Generate gpx file with route details"""
+    route = Route.objects.get(id=route_id)
+    gpx_template = f'''<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd
+                         http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd
+                         http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd"
+     creator="DjangoGPX"
+     version="1.1"
+     xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
+     xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+    <time>2002-02-27T17:18:33Z</time>
+    <trk>
+        <name>{route.title}</name>
+        <trkseg>
+            {parse_trackpoints(json.loads(route.trackpoints_list))}
+        </trkseg>
+    </trk>
+</gpx>'''.strip()
+    return gpx_template
+
+def parse_trackpoints(trackpoints_json):
+    """Convert trackpoints to XML format"""
+    parsed_string=""
+    for trackpoint in trackpoints_json:
+        parsed_string += f'''
+<trkpt lat="{trackpoint["lat"]}" lon="{trackpoint["lng"]}">
+    <ele></ele>
+    <time></time>
+</trkpt>'''
+    return parsed_string

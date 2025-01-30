@@ -17,7 +17,7 @@ class RouteForm(forms.ModelForm):
         fields = ['title', 'length', 'activity_type', 'waypoints_list', 'trackpoints_list'] # same as in models!
         labels = {'title' : 'Title', 'length' : 'Length', 'activity_type' : 'Activity Type'} 
         widgets = {
-            'waypoints_list': forms.TextInput(attrs={'type': 'hidden'}),
-            'trackpoints_list': forms.TextInput(attrs={'type': 'hidden'}),
+            'waypoints_list': forms.HiddenInput(),
+            'trackpoints_list': forms.HiddenInput(),
             'length': forms.TextInput(attrs={'readonly': 'readonly'})
         }

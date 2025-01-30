@@ -19,19 +19,38 @@
 <p> {{ route.length }} km, {{ route.activity_type }}</p>
 <p>{{ route.date_added|date:'d M Y, H:i' }}</p>
 
-<hr>
-
 <input type="hidden" id="waypoints" value="{{ route.waypoints_list }}">
-<input type="hidden" id="trackpoints" value="{{ route.trackpoints_list }}">
-<input type="hidden" id="title" value="{{ route.title }}">
-<input type="hidden" id="route_id" value="{{ route.id }}">
 
 <div id="map"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
 <script src="{% static 'dino_app/leaflet_routing_machine/leaflet-routing-machine.js' %}"></script>
 
 <hr>
-<button id="save-gpx-button">Save GPX</button>
-<script src="{% static '/dino_app/js/conversion_to_GPX.js' %}"></script>
+<a href="{% url 'dino_app:save_gpx' route.id %}" id="save-gpx-button"><button>Save GPX </button></a>
+<script>
+
+    var waypoints_data = document.getElementById('waypoints').value.replace(/'/g, '"');
+    var waypoints_json = JSON.parse(waypoints_data);
+    var waypoints = waypoints_json.map(function(wp) {
+        return L.latLng(wp.lat, wp.lng)
+    })
+
+    var map = L.map('map');
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.Routing.control({
+    waypoints: waypoints,
+    routeWhileDragging: false,
+    draggableWaypoints: false,
+    show: false,
+    lineOptions : {
+        addWaypoints: false // don't let user change routes here
+    },
+    })
+    .addTo(map);
+
+</script>
 
 {% endblock %}

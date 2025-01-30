@@ -15,6 +15,9 @@ urlpatterns = [
     # new route
     path('new_route/', views.new_route, name='new_route'),
 
+    # save GPX
+    path('routes/<int:route_id>/save_gpx/', views.save_gpx, name='save_gpx'),
+
 
     # development dummy page
     path('dummy/', views.dummy, name='dummy'),

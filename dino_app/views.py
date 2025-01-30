@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Route
 from .forms import RouteForm
 import json
+from django.core.paginator import Paginator
 
 def index(request):
     """Home page for DINO"""
@@ -19,13 +20,18 @@ def routes(request):
         "Mountain bike" : "🚵‍♂️",
     }
 
-    routes = Route.objects.order_by('-date_added') #newest to oldest
+    routes = Route.objects.all().order_by('-date_added') #newest to oldest
+
     for route in routes: 
         for k,v in ACTIVITIES_ICONS.items():
             if route.activity_type == k:
                 route.icon = v
                 route.save()
-    context = {'routes' : routes}
+
+    paginator = Paginator(routes, 5)  # Show 5 routes per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {"page_obj": page_obj}
     return render(request, 'dino_app/routes.html', context)
 
 def route(request, route_id):

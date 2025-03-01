@@ -22,7 +22,7 @@ The **Route Planner Application** is a cloud-based tool designed to help users g
 - Processes data through **Overpass API** for optimized querying and route calculations.
 
 ### 3. Route Export
-- Generates route files in **KML format**.
+- Generates route files in **KML** and **GPX** format.
 - Provides simple instructions for importing KML files into Google Maps.
 
 ### 4. User Interface
@@ -43,26 +43,6 @@ The **Route Planner Application** is a cloud-based tool designed to help users g
 
 ---
 
-## Technical Stack
-- **Frontend**: Responsive web design tailored for accessibility.
-- **Backend**: Integration with OpenStreetMap and Overpass API for route computation.
-- **Export**: KML file generation for seamless use in Google Maps.
-
----
-
-## How to Use the Application
-1. Open the application in your web browser on any device.
-2. Use the **Route Wizard** to set your preferences:
-   - Select activity, distance, and surface type.
-   - Choose start and end points or select on the map.
-3. (Optional) Add Points of Interest to your route.
-4. Generate the route and preview it on the map.
-5. Export the route as a **KML file** and follow the provided instructions to import it into Google Maps.
-
----
-
-## Accessibility and Localization
-- Designed for users of all ages with an emphasis on simplicity and readability.
 
 ---
 

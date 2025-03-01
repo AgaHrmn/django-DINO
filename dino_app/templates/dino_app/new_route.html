@@ -9,11 +9,15 @@
     <a href="{% url 'dino_app:index' %}">Home</a>
 </nav>
     <h2>Let's plan another adventure!</h2>
+
+    <h3>Use map to create new route yourself: </h3>
     <div id="map"></div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
     <script src="{% static 'dino_app/leaflet_routing_machine/leaflet-routing-machine.js' %}"></script>
 
-    <form action="{% url 'dino_app:new_route' %}" id="route-form" method="post">
+    <p>Provide here the tite for your new route and activity type, I'll calculate the length for You. </p>
+
+    <form action="{% url 'dino_app:new_route' %}" id="user-route-form" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button name="submit">Create</button>

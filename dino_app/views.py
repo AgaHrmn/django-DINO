@@ -9,6 +9,13 @@ from .forms import RouteForm
 import json
 from django.core.paginator import Paginator
 
+def dummy(request):
+    """Home page for DINO"""
+    route = Route.objects.get(id=25)
+    route.waypoints_list = json.dumps(route.waypoints_list)
+    context = {'route' : route}
+    return render(request, 'dino_app/dummy.html',context)
+
 def index(request):
     """Home page for DINO"""
     return render(request, 'dino_app/index.html')
@@ -49,11 +56,11 @@ def new_route(request):
     # return HttpResponse("OK") # validation
     if request.method != 'POST':
         # Create blank form
-        form = RouteForm()
+        form = RouteForm(readonly_length=True)
         # print(request.POST)
     else:
         # Prcess POST data
-        form = RouteForm(data=request.POST)
+        form = RouteForm(data=request.POST,readonly_length=True)
         # print(request.POST)
         if form.is_valid():
             form.save()
@@ -64,13 +71,23 @@ def new_route(request):
     context = {'form': form}
     return render(request, 'dino_app/new_route.html', context)
 
-def dummy(request):
-    """Home page for DINO"""
-    route = Route.objects.get(id=25)
-    route.waypoints_list = json.dumps(route.waypoints_list)
-    context = {'route' : route}
-    return render(request, 'dino_app/dummy.html',context)
+def generate_route(request):
+    """Create new route"""
+    if request.method != 'POST':
+        # Create blank form
+        form = RouteForm(readonly_length=False)
 
+    else:
+        # Prcess POST data
+        form = RouteForm(data=request.POST,readonly_length=False)
+        if form.is_valid():
+            form.save()
+            return redirect('dino_app:routes')
+        else: 
+            print(form.errors)
+    # Display blank or invalid form
+    context = {'form': form}
+    return render(request, 'dino_app/generate_route.html', context)
 
 def save_gpx(request, route_id):
     """Generate gpx file with route details"""

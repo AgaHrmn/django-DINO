@@ -2,20 +2,17 @@
 
 {% block page_header %}
     {% load static %}
-    <div class="page-header">
-        <img src="{% static 'dino_app/images/DINO.png' %}" alt="DINO" width="150">
-        <h1>Hello, I'm DINO!</h1>
-    </div>
 {% endblock %}
 
 {% block content %}
 <nav>
     <a href="{% url 'dino_app:index' %}">Home</a>
-    <a href="{% url 'dino_app:routes' %}">All routes</a>
-    <a href="{% url 'dino_app:new_route' %}">New route</a>
+    <a href="{% url 'dino_app:routes' %}">All routes</a>        
+    <a href="{% url 'dino_app:new_route' %}">Create route</a>
+    <a href="{% url 'dino_app:generate_route' %}">Generate route</a>
 </nav>
 <!-- h2 elements (and most other elements) don't have a "value". Only elements that behave as form controls have a value property (e.g. the input element) -->
-<h2>{{ route.title }} <a href="{% url 'dino_app:save_gpx' route.id %}" id="save-gpx-button"><button>Save GPX </button></a></h2>
+<h2>{{ route.title }} <a href="{% url 'dino_app:save_gpx' route.id %}"><button id="save-gpx-button">Save GPX </button></a></h2>
 
 <p> {{ route.length }} km, {{ route.activity_type }}</p>
 <p>{{ route.date_added|date:'d M Y, H:i' }}</p>
@@ -25,8 +22,6 @@
 <div id="map"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
 <script src="{% static 'dino_app/leaflet_routing_machine/leaflet-routing-machine.js' %}"></script>
-<hr>
-
 <script>
     // html is converting JSON tostring with single quotes -> regex to fix quotes
     var waypoints_data = document.getElementById('waypoints').value.replace(/'/g, '"');

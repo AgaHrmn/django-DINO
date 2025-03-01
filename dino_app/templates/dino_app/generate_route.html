@@ -1,0 +1,48 @@
+{% extends "dino_app/base.html" %}
+
+{% block page_header %}
+    {% load static %}
+{% endblock %}
+
+{% block content %}
+<nav>
+    <a href="{% url 'dino_app:index' %}">Home</a>
+</nav>
+<h2>Let's plan another adventure!</h2>  
+<h3>Let me generate new route for You. </h3>
+<p>Provide here the tite, activity type, and length of your new route and I'll take care of the rest.</p>
+
+<form action="{% url 'dino_app:generate_route' %}" id="generate-route-form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Generate</button>
+
+</form>
+    
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
+<script src="{% static 'dino_app/leaflet_routing_machine/leaflet-routing-machine.js' %}"></script>
+<script>
+
+    var map = L.map('map').setView([51.1079, 17.0385], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.Routing.control({
+    waypoints: [],
+    routeWhileDragging: false,
+    draggableWaypoints: false,
+    show: false,
+    lineOptions : {
+        addWaypoints: false // don't let user change routes here
+    },
+    })
+    .addTo(map);
+
+    console.log(document.getElementById('id_waypoints_list').value);
+
+
+</script>
+
+{% endblock %}

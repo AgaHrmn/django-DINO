@@ -2,16 +2,13 @@
 
 {% block page_header %}
     {% load static %}
-    <div class="page-header">
-        <img src="{% static 'dino_app/images/DINO.png' %}" alt="DINO" width="150">
-        <h1>Hello, I'm DINO!</h1>
-    </div>
 {% endblock %}
 
 {% block content %}
 <nav>
-    <a href="{% url 'dino_app:index' %}">Home</a>
-    <a href="{% url 'dino_app:new_route' %}">New route</a>
+    <a href="{% url 'dino_app:index' %}">Home</a>        
+    <a href="{% url 'dino_app:new_route' %}">Create route</a>
+    <a href="{% url 'dino_app:generate_route' %}">Generate route</a>
 </nav>
 <h1>Created Routes</h1>
     <ul>

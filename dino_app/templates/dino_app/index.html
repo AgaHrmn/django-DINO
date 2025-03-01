@@ -11,8 +11,9 @@
 
 {% block content %}
     <nav>
-        <a href="{% url 'dino_app:new_route' %}">New route</a>
-        <a href="{% url 'dino_app:routes' %}">Created routes</a>
+        <a href="{% url 'dino_app:new_route' %}">Create route</a>
+        <a href="{% url 'dino_app:generate_route' %}">Generate route</a>
+        <a href="{% url 'dino_app:routes' %}">All routes</a>
         <a href="#contact">Contact</a>
     </nav>
     <section id="about">

@@ -10,67 +10,19 @@ body {
 
 /* Header */
 header {
-    background: #333;
+    background: #006bdd;
     color: #fff;
     text-align: center;
-    padding: 1rem 0; /* Adds padding to make the header taller */
-    font-size: 1.5rem; /* Adjust font size */
+    padding: 2px; /* Adds padding to make the header taller */
     position: relative; /* Keeps the header fixed at the top */
     top: 0; /* Positions the header at the top */
     width: 100%; /* Ensures the header takes the full width of the page */
     z-index: 1000; /* Keeps it on top of other content */
 }
 
-.pill-button {
-    background-color: #1F812D;
-    
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.pill-button a {
-    color: whitesmoke;
-    text-decoration: none;
-}
-
-
-
-.pill-button:hover {
-    background-color: #14591e;
-}  
-
-.pill-button a:hover {
-    color: whitesmoke;
-    text-decoration: none;
-}
-
-header h1 {
-    margin: 0; /* Removes default margin from h1 */
-}
-
-/* Centering both the image and the heading */
-.page-header {
-    display: flex;
-    flex-direction: column; /* Align items vertically */
-    justify-content: center; /* Vertically center */
-    align-items: center; /* Horizontally center */
-    text-align: center;
-    margin: 0 auto;
-}
-
 .page-header img {
     display: block; /* Makes the image a block element */
     margin: 0 auto; /* Centers the image horizontally */
-}
-
-
-.page-header h1 {
-    margin: 0;
-    font-size: 2rem;
 }
 
 /* Navigation */
@@ -127,7 +79,7 @@ hr {
 
 /* Footer */
 footer {
-    background: #333;
+    background: #006bdd;
     color: #fff;
     text-align: center;
     padding: 1rem 0;
@@ -140,11 +92,11 @@ footer {
 }
 
 #map {
-    height: 400px;
+    height: 350px;
 }
 
 .map-container {
-    height: 400px;
+    height: 350px;
 }
 
 /* Form Styles */

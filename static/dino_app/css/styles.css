@@ -24,6 +24,9 @@ header {
     display: block; /* Makes the image a block element */
     margin: 0 auto; /* Centers the image horizontally */
 }
+.page-header h1 {
+    text-align: center;
+}
 
 /* Navigation */
 nav {
@@ -36,6 +39,7 @@ nav a {
     text-decoration: none;
     margin: 0 15px;
     font-weight: bold;
+    font-size: large;
 }
 
 nav a:hover {

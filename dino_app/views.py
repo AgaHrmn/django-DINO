@@ -149,3 +149,4 @@ def extract_elevation(trackpoint):
             return elevation[0]
         else:
             return None  # If the coordinates are out of bounds
+        

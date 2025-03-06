@@ -10,13 +10,12 @@
 </nav>
 <h2>Let's plan another adventure!</h2>  
 <h3>Let me generate route for You. </h3>
-<p>Provide here the tite, activity type, and length of your new route and I'll take care of the rest.</p>
+<p>Mark the starting point on the map and provide me the tite, activity type, and length of your new route, and I'll take care of the rest.</p>
 
 <form action="{% url 'dino_app:generate_route' %}" id="generate-route-form" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button name="submit">Generate</button>
-
 </form>
     
 <div id="map"></div>
@@ -29,7 +28,14 @@
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    L.Routing.control({
+    function createButton(label, container) {
+    var btn = L.DomUtil.create('button', '', container);
+    btn.setAttribute('type', 'button');
+    btn.innerHTML = label;
+    return btn;
+    }
+
+    var control = L.Routing.control({
     waypoints: [],
     routeWhileDragging: false,
     draggableWaypoints: false,
@@ -38,11 +44,77 @@
         addWaypoints: false // don't let user change routes here
     },
     })
+    .on('waypointschanged', function(e) {
+        // get waypoints 
+        var waypoints = control.getWaypoints(e)
+        // extract only latLng values from waypoint (there are also name, options, and _initHooksCalled)
+        .map(function(waypoint) {
+            return waypoint.latLng; // Extract the latLng property
+    });
+        document.getElementById('id_waypoints_list').value = JSON.stringify(waypoints);
+        console.log(document.getElementById('id_waypoints_list').value);
+        })
+    .on('routesfound', function(e) {
+        // extract the total distance in meters
+        var length = e.routes[0].summary.totalDistance; 
+        // convert the distance to kilometers
+        var formattedLength = (length / 1000).toFixed(2)
+        console.log(formattedLength)
+    })
     .addTo(map);
 
-    console.log(document.getElementById('id_waypoints_list').value);
+    map.on('click', function(e) {
+        var container = L.DomUtil.create('div'),
+            startBtn = createButton('Starting point', container);
+
+        L.popup()
+            .setContent(container)
+            .setLatLng(e.latlng)
+            .openOn(map);
+
+        // Add event listeners to buttons inside the click event handler
+        L.DomEvent.on(startBtn, 'click', function() {
+
+            var start = e.latlng; // Example starting point (Wrocław)
+            var distance = 500 * document.getElementById('id_length').value; 
+            var bearing = 90; // East
+
+            var newPoint = generateWaypoint(start, distance, bearing);
+            console.log("destination:")
+            console.log(newPoint);
+
+            control.spliceWaypoints(0, 1, e.latlng);  // Update the start waypoint
+            control.spliceWaypoints(control.getWaypoints().length - 1, 1, newPoint);
+            map.closePopup();
+        });
+    });
 
 
+    // Haversine formula to calculate a new waypoint based on a given distance and starting point
+    function toRadians(degrees) {
+    return degrees * Math.PI / 180;
+    }
+
+    function toDegrees(radians) {
+        return radians * 180 / Math.PI;
+    }
+
+    function generateWaypoint(start, distance, bearing) {
+        var R = 6371e3; // Earth's radius in meters
+        var lat1 = toRadians(start.lat);
+        var lon1 = toRadians(start.lng);
+        var dByR = distance / R; // Angular distance
+
+        var newLat = Math.asin(Math.sin(lat1) * Math.cos(dByR) + 
+                            Math.cos(lat1) * Math.sin(dByR) * Math.cos(toRadians(bearing)));
+
+        var newLon = lon1 + Math.atan2(Math.sin(toRadians(bearing)) * Math.sin(dByR) * Math.cos(lat1), 
+                                    Math.cos(dByR) - Math.sin(lat1) * Math.sin(newLat));
+
+        return { lat: toDegrees(newLat), lng: toDegrees(newLon) };
+    }
 </script>
+
+<!-- <script src="{% static '/dino_app/js/generate_map_functions.js' %}"></script> -->
 
 {% endblock %}

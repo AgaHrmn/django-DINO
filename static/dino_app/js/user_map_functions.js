@@ -3,6 +3,15 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
+function getActivityProfile() {
+    var activityType = document.getElementById('id_activity_type').value;
+    if (activityType === 'Bike') {
+        return 'bike';  // Use 'bike' profile if selected
+    } else {
+        return 'foot';  // Default to 'foot' profile for other activities
+    }
+}
+
 function createButton(label, container) {
     var btn = L.DomUtil.create('button', '', container);
     btn.setAttribute('type', 'button');
@@ -14,6 +23,9 @@ function createButton(label, container) {
 var control = L.Routing.control({
     waypoints: [],
     routeWhileDragging: false,
+    router: new L.Routing.osrmv1({
+        profile: getActivityProfile(), // change routing profile based on activity
+    }),
 })
 .on('routesfound', function(e) {
     // extract the total distance in meters
@@ -31,6 +43,8 @@ var control = L.Routing.control({
         return waypoint.latLng; // Extract the latLng property
     });
     document.getElementById('id_waypoints_list').value = JSON.stringify(waypoints);
+    control.getRouter().options.profile = getActivityProfile()
+    control.route();
 })
 .on('routeselected', function(routes) {
     // console.log(routes.route.coordinates)

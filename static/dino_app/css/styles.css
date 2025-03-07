@@ -146,6 +146,15 @@ form textarea:focus {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+/* Center the content inside the popup */
+.leaflet-popup-content {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    flex-direction: column; /* Stack buttons vertically */
+    text-align: center; /* Optional: for centering text inside the buttons */
+}
+
 /* Button Styles */
 button,
 form input[type="submit"] {
@@ -156,6 +165,7 @@ form input[type="submit"] {
     padding: 5px 5px;
     font-size: 14px;
     cursor: pointer;
+    margin: 2px;
     transition: background-color 0.3s ease;
 }
 

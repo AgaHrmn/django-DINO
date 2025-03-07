@@ -6,26 +6,50 @@
         <img src="{% static 'dino_app/images/DINO.png' %}" alt="DINO" width="150">
         <h1>Hello, I'm DINO!</h1>
     </div>
-
 {% endblock %}
 
 {% block content %}
-    <nav>
+    <!-- <nav>
         <a href="{% url 'dino_app:new_route' %}">Create route</a>
         <a href="{% url 'dino_app:generate_route' %}">Generate route</a>
         <a href="{% url 'dino_app:routes' %}">All routes</a>
-        <a href="#contact">Contact</a>
-    </nav>
+    </nav> -->
+
     <section id="about">
         <h2>About DINO</h2>
-        <p>I'll create a route for You!</p>
+        <p>
+            Dino is a user-friendly tool designed to help you create and generate routes for outdoor activities such as running, walking, 
+            and biking. Whether you're planning a casual stroll or a thrilling bike ride, Dino simplifies the process by providing an 
+            intuitive interface to generate and customize your routes with ease. Its main goal is to offer a seamless experience, 
+            making outdoor planning effortless and fun for everyone.
+        </p>
     </section>
+
     <section id="services">
-        <h2>My Services</h2>
-        <p>Let’s plan an amazing adventure!</p>
+        <h2>Services</h2>
+        <p>
+            <strong><a href="{% url 'dino_app:new_route' %}">Route Creation with Interactive Map</a></strong><br>
+            Dino allows you to easily create personalized routes using an interactive map. Simply select your starting point and 
+            customize your route as you go, making it perfect for running, walking, or biking. The map lets you adjust the waypoints 
+            with ease, ensuring your route is exactly how you envision it.
+        </p>
+        <p>
+            <strong><a href="{% url 'dino_app:generate_route' %}">Route Generator</a></strong><br>
+            For those who love spontaneity, Dino offers a random route generator. This feature generates waypoints based on your 
+            preferences, allowing you to quickly create a route from scratch. Once the waypoints are generated, you can fine-tune them 
+            to better suit your desired path, giving you full control over your adventure.
+        </p>
+        <p>
+            <strong><a href="{% url 'dino_app:routes' %}">All routes</a></strong><br>
+            Here you can browse all created routes. 
+        </p>
+        
     </section>
+
     <section id="contact">
         <h2>Contact Me</h2>
-        <p>Have questions or want to collaborate? Reach out to me via <a href="mailto:your-email@example.com">email</a>.</p>
+        <p>
+            Have questions or want to collaborate? Reach out to me via <a href="mailto:your-email@example.com">email</a>.
+        </p>
     </section>
 {% endblock %}

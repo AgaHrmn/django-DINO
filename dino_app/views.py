@@ -112,7 +112,7 @@ def save_gpx(request, route_id):
 </gpx>'''.strip()
 
     response = HttpResponse(gpx_template, content_type="application/gpx+xml")
-    response['Content-Disposition'] = f'attachment; filename="{route.title}.gpx"'
+    response['Content-Disposition'] = f'attachment; filename="{route_id}.gpx"'
 
     return response
 

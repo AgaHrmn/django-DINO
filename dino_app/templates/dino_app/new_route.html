@@ -15,7 +15,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" ></script>
     <script src="{% static 'dino_app/leaflet_routing_machine/leaflet-routing-machine.js' %}"></script>
 
-    <p>Provide here the tite for your new route and activity type, I'll calculate the length for You. </p>
+    <p>Provide here the tite for your new route and activity type, I'll calculate the length for you. </p>
 
     <form action="{% url 'dino_app:new_route' %}" id="user-route-form" method="post">
         {% csrf_token %}

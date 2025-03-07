@@ -27,8 +27,7 @@ def routes(request):
         "Run": "🏃",
         "Walk" : "🚶",
         "Hike" : "🥾",
-        "Road bike" : "🚴‍♂️",
-        "Mountain bike" : "🚵‍♂️",
+        "Bike" : "🚴‍♂️",
     }
 
     routes = Route.objects.all().order_by('-date_added') #newest to oldest

@@ -5,8 +5,7 @@ ACTIVITIES_CHOICES =(
     ("Run", "Run"),
     ("Walk", "Walk"),
     ("Hike", "Hike"),
-    ("Road bike", "Road bike"),
-    ("Mountain bike", "Mountain bike"),
+    ("Bike", "Bike"),
 )
 
 class RouteForm(forms.ModelForm):

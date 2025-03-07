@@ -32,20 +32,33 @@
     }).addTo(map);
 
     function createButton(label, container) {
-    var btn = L.DomUtil.create('button', '', container);
-    btn.setAttribute('type', 'button');
-    btn.innerHTML = label;
-    return btn;
+        var btn = L.DomUtil.create('button', '', container);
+        btn.setAttribute('type', 'button');
+        btn.innerHTML = label;
+        return btn;
+    }
+
+        // Function to update the OSRM profile (foot or bike)
+    function getActivityProfile() {
+        var activityType = document.getElementById('id_activity_type').value;
+        if (activityType === 'Bike') {
+            return 'bike';  // Use 'bike' profile if selected
+        } else {
+            return 'foot';  // Default to 'foot' profile for other activities
+        }
     }
 
     var control = L.Routing.control({
-    waypoints: [],
-    routeWhileDragging: false,
-    draggableWaypoints: true, // let user make adjustments to the generated route
-    show: false,
-    lineOptions : {
-        addWaypoints: false // don't let user change routes here
-    },
+        waypoints: [],
+        routeWhileDragging: false,
+        draggableWaypoints: true, // let user make adjustments to the generated route
+        show: false,
+        lineOptions : {
+            addWaypoints: false // don't let user change routes here
+        },
+        router: new L.Routing.osrmv1({
+            profile: getActivityProfile(), // change routing profile based on activity
+        }),
     })
     .on('waypointschanged', function(e) {
         // get waypoints 
@@ -53,10 +66,12 @@
         // extract only latLng values from waypoint (there are also name, options, and _initHooksCalled)
         .map(function(waypoint) {
             return waypoint.latLng; // Extract the latLng property
-    });
+        });
         document.getElementById('id_waypoints_list').value = JSON.stringify(waypoints);
         //console.log(document.getElementById('id_waypoints_list').value);
-        })
+        control.getRouter().options.profile = getActivityProfile()
+        control.route();
+    })
     .on('routesfound', function(e) {
         // extract the total distance in meters
         var length = e.routes[0].summary.totalDistance; 

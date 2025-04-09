@@ -7,35 +7,30 @@ The **Route Planner Application** is a cloud-based tool designed to help users g
 
 ## Features and Functionality
 
-### 1. Route Wizard
+### 1. Route Creator
 - **Route Parameters**:
   - Select activity type: **Bike**, **Walk**, or **Run**.
-  - Define route length: **5 km**, **10 km**, **15 km**, or custom distances.
-  - Choose surface type: **Asphalt**, **Forest Paths**, or **Mixed**.
-  - Specify starting (and optionally ending) locations via address or map selection.
-- **Points of Interest (POI)**:
-  - Mark POIs along the route such as parks, lakes, and monuments.
+  - Define route length.
+  - Specify starting (and optionally ending) locations via interaction with map.
 
 ### 2. Integration with OpenStreetMap
 - Utilizes **OSM** data for route generation.
 - Considers attributes like pavement type and route accessibility.
-- Processes data through **Overpass API** for optimized querying and route calculations.
 
 ### 3. Route Export
-- Generates route files in **KML** and **GPX** format.
-- Provides simple instructions for importing KML files into Google Maps.
+- Generates route files in **GPX** format.
 
 ### 4. User Interface
 - **Intuitive Design**:
   - Large buttons and fonts for ease of use, especially for elderly users.
-  - Step-by-step instructions in **Polish**.
+  - Step-by-step instructions in **English**.
 - **Route Preview**:
   - Interactive map view of the generated route.
 
 ### 5. Application Availability
 - **Cross-Platform Support**:
   - Browser-based version for desktops and tablets.
-  - Mobile-friendly version optimized for smartphones.
+  - Mobile-friendly version.
 
 ### 6. No Registration Required
 - Fully accessible without user accounts.
@@ -43,6 +38,15 @@ The **Route Planner Application** is a cloud-based tool designed to help users g
 
 ---
 
+### Further development ###
+- **Points of Interest (POI)**:
+  - Mark POIs along the route such as parks, lakes, and monuments.
+ 
+- **Export to KML file**
+  - Provides simple instructions for importing KML files into Google Maps.
+    
+- **Availability**
+  - Optimize for smartphones
 
 ---
 

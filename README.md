@@ -48,6 +48,9 @@ The **Route Planner Application** is a cloud-based tool designed to help users g
 - **Availability**
   - Optimize for smartphones
 
+- **Implementation of routing server**
+  - Currently routing is based on OSRM and is capable of basic features. In order to implement more advanced route plannng customrouting server is necessary. 
+
 ---
 
 ## Contribution

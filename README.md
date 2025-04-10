@@ -41,9 +41,6 @@ The **Route Planner Application** is a cloud-based tool designed to help users g
 ### Further development ###
 - **Points of Interest (POI)**:
   - Mark POIs along the route such as parks, lakes, and monuments.
- 
-- **Export to KML file**
-  - Provides simple instructions for importing KML files into Google Maps.
     
 - **Availability**
   - Optimize for smartphones
